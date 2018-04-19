@@ -196,7 +196,7 @@ public class ArtPanel extends JPanel;
 		int width = (int) (Math.random() * currentScale ) + 1;
 		if (coinFlip())
 		{
-			currentRectanlge = new Rectangle(cornerX, cornerY, width, width);
+			currentRectangle = new Rectangle(cornerX, cornerY, width, width);
 		}
 		else
 		{
@@ -211,10 +211,10 @@ public class ArtPanel extends JPanel;
 		
 		int cornerX = (int) (Math.random() * 600);
 		int cornerY = (int) (Math.random() * 600);
-		double width = Math.random() * currentScale) +1;
+		double width = Math.random() * currentScale +1;
 		if (coinFlip())
 		{
-			ellipse.setFrame(cornerX, corenerY, width, height);
+			ellipse.setFrame(cornerX, cornerY, width, width);
 		}
 		else
 		{
@@ -225,14 +225,43 @@ public class ArtPanel extends JPanel;
 		return ellipse;
 	}
 	
+	rectangleButton.addActionListener(new ActionListener()
+	{
+		public void actionPerfromed(ActionEvent click)
+		{
+			Rectangle rectangle = createRectangle();
+			canvas.addShape(rectangle);
+		}
+	});
 	
+	triangleButton.addActionListener(new ActionListener()
+	{
+		public void actionPerformed(ActionEvent click)
+		{
+			Polygon triangle = createPolygon(3);
+			canvas.addShape(triangle);
+		}
+	});
 	
+	polygonButton.addActionListener(new ActionListener()
+	{
+		public void actionPerformed(ActionEvent click)
+		{
+			Polygon polygon = createPolygon(currentEdgeCount);
+			canvas.addShape(polygon);
+		}
+	});
+	
+	ellipseButton.addActionListener(new ActionListener()
+	{
+		public void actionPerformed(ActionEvent click)
+		{
+			Ellipse2D ellipse = createEllipse();
+			canvas.addShape(ellipse);
+		}
+	});
 }
 
 
 
 
-public class ArtPanel
-{
-
-}
