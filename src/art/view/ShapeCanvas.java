@@ -39,7 +39,7 @@ public class ShapeCanvas extends JPanel
 		ellipseList = new ArrayList<Ellipse2D>();
 		rectangleList = new ArrayList<Rectangle>();
 		
-		canvasImage = new BufferedImage(600, 600, BufferedImage.TYPE_INT_ARGB;
+		canvasImage = new BufferedImage(600, 600, BufferedImage.TYPE_INT_ARGB);
 		this.setMinimumSize(new Dimension(600, 600));
 		this.setPreferredSize(new Dimension(600,600));
 		this.setMaximumSize(getPreferredSize());
@@ -64,18 +64,53 @@ public class ShapeCanvas extends JPanel
 		}
 		else
 		{
-			rectangleList.add(((Rectangle) current);
+			rectangleList.add((Rectangle) current);
 		}
 		updateImage();
 	}
 	
 	public void clear()
+	{
+		canvasImage = new BufferedImage(600, 600, BufferedImage.TYPE_INT_ARGB);
+		ellipseList.clear();
+		triangleList.clear();
+		polygonList.clear();
+		rectangleList.clear();
+		updateImage();
+	}
 	
 	public void changeBackground()
+	{
+		Graphics2D current = canvasImage.createGraphics();
+		current.setPaint(randomColor());
+		current.fillRect(0, 0, canvasImage.getWidth(), canvasImage.getHeight());
+		updateImage();
+	}
 	
 	public void save()
+	{
+		try
+		{
+			JFileChooser saveDialog = new JFileChooser();
+			saveDialog.showSaveDialog(app.getFrame());
+			String savePath = saveDialog.getSelectedFile().getPath();
+			ImageIO.write(canvasImage,  "PNG", new File(savePath));
+		}
+		catch (IOException error)
+		{
+			app.handleErrors(error);
+		}
+	}
 	
 	private Color randomColor()
+	{
+		int red = (int)(Math.random() * 256);
+		int green = (int)(Math.random() * 256);
+		int blue = (int)(Math.random() * 256);
+		int alpha = (int)(Math.random() * 256);
+		
+		return new Color(red, green, blue, alpha);
+	}
 	
 	private void updateImage()
 	{
@@ -114,7 +149,7 @@ public class ShapeCanvas extends JPanel
 	}
 	
 	@Override
-	protected void paintComponents(Graphics graphics)
+	protected void paintComponent(Graphics graphics)
 	{
 		super.paintComponent(graphics);
 		graphics.drawImage(canvasImage, 0, 0, null);
